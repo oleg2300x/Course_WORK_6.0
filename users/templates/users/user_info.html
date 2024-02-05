@@ -1,0 +1,61 @@
+{% extends 'main/base.html' %}
+{% load my_tags %}
+
+{% block content %}
+<div>
+    <h1 class="container text-center pt-5">
+        Пользователь - {{ object }}
+    </h1>
+
+
+    <div class="py-5">
+        <div class="container">
+
+            <div class="row">
+
+                <div class="col-12">
+                    <div class="card shadow-sm">
+                        <div class="card-header">Пользователь</div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <p class="card-text">Имя - {{ object.name }}</p>
+                                    <p class="card-text">Фамилия - {{ object.lastname }}</p>
+                                    <p class="card-text">Дата рождения - {{ object.birthday }}</p>
+                                </div>
+                                <div class="col">
+                                    <p class="card-text">Email - {{ object.email }}</p>
+                                    <p class="card-text">Статус - {{ object.is_active }}</p>
+                                    <p class="card-text">Верификация почты - {{ object.email_verify }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div class="d-flex ">
+                                <div class="btn-group">
+
+                                    <a href="{% url 'user_change_active' object.pk %}" type="button"
+                                       class="btn btn-sm btn-outline-secondary">
+                                        {% if object.is_active %}
+                                        Отключить
+                                        {% else %}
+                                        Включить
+                                        {% endif %}
+                                    </a>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% include 'mailing/components/list_of_mailings.html' %}
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

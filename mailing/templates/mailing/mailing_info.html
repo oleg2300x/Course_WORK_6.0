@@ -1,0 +1,92 @@
+{% extends 'main/base.html' %}
+{% load my_tags %}
+
+{% block content %}
+<div>
+    <h2 class="container text-center pt-5 mb-3">
+        {{ object.name }}
+    </h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <div class="card shadow-sm mb-3">
+                    <div class="card-header">Рассылки</div>
+                    <div class="card-body">
+                        <p class="card-text">Название рассылки - {{ object.name }}</p>
+                        <p class="card-text">Начало рассылки - {{ object.data_mailing }}</p>
+                        {% if object.data_mailing_finish %}
+                        <p class="card-text">Конец рассылки - {{ object.data_mailing_finish }}</p>
+                        {% endif %}
+                        <p class="card-text">Переодичность рассылки - {{ object.periodicity }}</p>
+                        <p class="card-text">Статус - {{ object.status }}</p>
+                    </div>
+                    <div class="card-footer"></div>
+                </div>
+                <div class="card shadow-sm mb-3">
+                    <div class="card-header">Сообщение</div>
+                    <div class="card-body">
+                        <p class="card-text">Сообщение - {{ message.title }}</p>
+                        <p class="card-text">Текс - {{ message.body }}</p>
+                    </div>
+                    <div class="card-footer"></div>
+                </div>
+                <div class="card shadow-sm mb-3">
+                    <div class="card-header">Статистика</div>
+                    <div class="card-body">
+                        {% for log in logs %}
+                        <p class="card-text">{{ log.datatime }} - {{ log.status }}</p>
+                        {% endfor %}
+                    </div>
+                    <div class="card-footer"></div>
+                </div>
+                <div class="col d-flex align-items-center justify-content-center justify-content-md-between  mb-5">
+                    {% if perms.mailing.change_mailing %}
+                    <div>
+                        <a class="btn btn-primary btn-lg px-4 gap-3 " href="{% url 'mailing_change_status' object.pk %}" role="button">
+                            {% if object.status == 'Canceled' %}
+                            Запустить рассылку
+                            {% else %}
+                            Остановить рассылку
+                            {% endif %}
+                        </a>
+                    </div>
+                    {% else %}
+                    <div>
+
+
+                        <a href="{% url 'mailing_update' object.pk %}" type="button"
+                           class="btn btn-primary btn-lg px-4 gap-3 ">Изменить
+                        </a>
+                        <a href="{% url 'mailing_delete' object.pk %}" type="button"
+                           class="btn btn-primary btn-lg px-4 gap-3 ">Удалить
+                        </a>
+                    </div>
+                    <div>
+
+
+                        <a class="btn btn-primary btn-lg px-4 gap-3 " href="{% url 'mailing_list' %}" role="button">Показать мои рассылки</a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-4">
+                {% for client in clients %}
+                <div class="card shadow-sm mb-3">
+                    <div class="card-header">Клиент</div>
+
+                    <div class="card-body">
+                        <p class="card-text">Имя - {{ client.name }}</p>
+                        <p class="card-text">Email - {{ client.email }}</p>
+                    </div>
+
+                    <div class="card-footer"></div>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

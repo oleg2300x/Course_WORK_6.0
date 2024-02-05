@@ -1,0 +1,52 @@
+{% extends 'main/base.html' %}
+{% load my_tags %}
+
+{% block content %}
+{% include 'article/components/welcome.html' %}
+
+<div class="container">
+    <div class="row">
+        {% for article in object_list %}
+        <div class="col-12">
+            <div class="card shadow-sm mb-3">
+                <div class="card-header text-center">
+                    <h3>{{ article.title }}</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-4">
+                            <img src="{{ article.blog_image|my_media }}" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="col-8">
+                            <p class="card-text">{{ article.text| truncatewords:100 }}</p>
+                            <div class="row">
+                                <small class="text-body-secondary text-end">Просмотры - {{ article.number_views }}</small>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="card-footer text-end">
+                    <a href="{% url 'article_info' article.slug %}" type="button"
+                       class="btn btn-primary btn-lg px-4 gap-3 ">Подробнее
+                    </a>
+                    {% if perms.article.change_article %}
+                    <a href="{% url 'article_update' article.slug %}" type="button"
+                       class="btn btn-primary btn-lg px-4 gap-3 ">Изменить
+                    </a>
+                    <a href="{% url 'article_delete' article.slug %}" type="button"
+                       class="btn btn-primary btn-lg px-4 gap-3 ">Удалить
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+
+
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% endblock %}

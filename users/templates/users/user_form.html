@@ -1,0 +1,27 @@
+{% extends 'main/base.html' %}
+{% load my_tags%}
+
+{% block content %}
+<div class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header"></div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        <img src="{{ object.avatar|my_media }}" alt="Фото не установленно" height=300px width=230px>
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                    </form>
+                </div>
+                <div class="card-footer"></div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

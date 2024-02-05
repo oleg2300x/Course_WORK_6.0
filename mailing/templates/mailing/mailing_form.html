@@ -1,0 +1,69 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+    <div>
+        <h2 class="container text-center pt-5 mb-3">
+            {{ object.name }}
+        </h2>
+        <div class="container">
+            <div class="row">
+                <div class="col-8">
+                    <div class="card shadow-sm mb-3">
+                        <div class="card-header">Рассылки</div>
+                        <div class="card-body">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                        </div>
+                        <div class="card-footer"></div>
+                    </div>
+                    <div class="card shadow-sm mb-3">
+                        <div class="card-header">Сообщение</div>
+                        <div class="card-body">
+                            {{ mailing_formset.management_form }}
+                            {% for form in mailing_formset.forms %}
+                            {{ form.as_p }}
+                            {% endfor %}
+                        </div>
+                        <div class="card-footer"></div>
+                    </div>
+
+                    <div class="col d-flex align-items-center justify-content-center justify-content-md-between mb-5">
+                        <div>
+
+                            {% if object.pk %}
+                            <a class="btn btn-primary btn-lg px-4 gap-3 " href="{% url 'mailing_info' object.pk %}" role="button">
+                                Вернуться к информации о рассылке</a>
+                            {% endif %}
+                        </div>
+                        <div>
+
+
+                            <a class="btn btn-primary btn-lg px-4 gap-3 " href="{% url 'mailing_list' %}" role="button">
+                                Вернуться к списку моих рассылок</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="card shadow-sm">
+                        <div class="card-header">Клиенты</div>
+                        <div class="card-body">
+                            {{ client_formset.management_form }}
+                            {% for form in client_formset.forms %}
+                            {{ form.as_p }}
+                            {% endfor %}
+                        </div>
+                        <div class="card-footer">
+                            <input class="btn btn-primary btn-lg px-4 gap-3" type="submit"  value="Save mailing">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</form>
+
+
+{% endblock %}

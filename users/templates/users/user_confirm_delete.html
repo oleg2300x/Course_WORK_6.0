@@ -1,0 +1,24 @@
+{% extends 'main/base.html' %}
+{% load my_tags%}
+
+{% block content %}
+
+
+<div class="container text-center">
+    <h1 class="container text-center pt-5">
+        Вы действительно хотите удалить пользователя - {{ object.name }}
+    </h1>
+    <form method="post">
+        {% csrf_token %}
+
+        <button type="submit" >Удалить</button>
+        <a href="{% url 'user_info' object.pk %}" type="button"
+           class="btn btn-sm btn-outline-secondary">Назад
+        </a>
+
+    </form>
+
+</div>
+
+
+{% endblock %}

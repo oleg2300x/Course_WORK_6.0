@@ -1,0 +1,32 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+
+<div class="container text-center">
+    <h4 class="container text-center pt-5">
+        {% if object.title %}
+        Статья "{{ object.title }}"
+        {% else %}
+        Вы можете добавить статью
+        {% endif %}
+    </h4>
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+            <form method="post" class="mb-5" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="text-end">
+                    <input class="btn btn-primary btn-lg px-4 gap-3 " type="submit" value="Save">
+                    <a href="{% url 'article_list' %}" type="button"
+                       class="btn btn-primary btn-lg px-4 gap-3">Назад
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
